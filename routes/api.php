@@ -244,99 +244,75 @@ Route::middleware([
         '/withdrawals',
         [WithdrawalController::class, 'store']
     );
+});
 
-    /*
-    |--------------------------------------------------------------------------
-    | COURIER ROUTES
-    |--------------------------------------------------------------------------
-    */
+/*
+|--------------------------------------------------------------------------
+| COURIER ROUTES
+|--------------------------------------------------------------------------
+*/
 
-    Route::middleware([
-        'auth:sanctum',
-        'role:4'
-    ])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    'role:4'
+])->group(function () {
 
-        /*
-        |--------------------------------------------------------------------------
-        | AVAILABLE ORDERS
-        |--------------------------------------------------------------------------
-        */
+    Route::get(
+        '/courier/orders/available',
+        [OrderController::class, 'availableOrders']
+    );
 
-        Route::get(
-            '/courier/orders/available',
-            [OrderController::class, 'availableOrders']
-        );
+    Route::patch(
+        '/orders/{id}/accept',
+        [OrderController::class, 'accept']
+    );
 
-        /*
-        |--------------------------------------------------------------------------
-        | ORDER OPERATION
-        |--------------------------------------------------------------------------
-        */
+    Route::post(
+        '/orders/{id}/pickup',
+        [OrderController::class, 'pickup']
+    );
 
-        Route::patch(
-            '/orders/{id}/accept',
-            [OrderController::class, 'accept']
-        );
+    Route::patch(
+        '/orders/{id}/deliver',
+        [OrderController::class, 'deliver']
+    );
 
-        Route::post(
-            '/orders/{id}/pickup',
-            [OrderController::class, 'pickup']
-        );
+    Route::patch(
+        '/orders/{id}/complete',
+        [OrderController::class, 'complete']
+    );
 
-        Route::patch(
-            '/orders/{id}/deliver',
-            [OrderController::class, 'deliver']
-        );
+    Route::get(
+        '/reviews/my-received',
+        [ReviewController::class, 'myReceivedReviews']
+    );
 
-        Route::patch(
-            '/orders/{id}/complete',
-            [OrderController::class, 'complete']
-        );
+    Route::get(
+        '/courier/reviews',
+        [ReviewController::class, 'myReceivedReviews']
+    );
 
-        /*
-        |--------------------------------------------------------------------------
-        | REVIEWS
-        |--------------------------------------------------------------------------
-        */
+    Route::patch(
+        '/courier/location',
+        [CourierLocationController::class, 'update']
+    );
 
-        Route::get(
-            '/reviews/my-received',
-            [ReviewController::class, 'myReceivedReviews']
-        );
+    Route::patch(
+        '/courier/toggle-online',
+        [CourierLocationController::class, 'toggleOnline']
+    );
+});
 
-        // legacy route
-        Route::get(
-            '/courier/reviews',
-            [ReviewController::class, 'myReceivedReviews']
-        );
+/*
+|--------------------------------------------------------------------------
+| ADMIN + SUPER ADMIN
+|--------------------------------------------------------------------------
+*/
 
-        /*
-        |--------------------------------------------------------------------------
-        | LOCATION
-        |--------------------------------------------------------------------------
-        */
-
-        Route::patch(
-            '/courier/location',
-            [CourierLocationController::class, 'update']
-        );
-
-        Route::patch(
-            '/courier/toggle-online',
-            [CourierLocationController::class, 'toggleOnline']
-        );
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN + SUPER ADMIN
-    |--------------------------------------------------------------------------
-    */
-
-    Route::middleware([
-        'auth:sanctum',
-        'role:1,2'
-    ])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    'role:1,2'
+])->group(function () {
 
         /*
         |--------------------------------------------------------------------------
@@ -422,70 +398,68 @@ Route::middleware([
             '/admin/couriers/{id}/deactivate',
             [AdminCourierController::class, 'deactivate']
         );
-    });
+});
 
-    /*
-    |--------------------------------------------------------------------------
-    | SUPER ADMIN ONLY
-    |--------------------------------------------------------------------------
-    */
+/*
+|--------------------------------------------------------------------------
+| SUPER ADMIN ONLY
+|--------------------------------------------------------------------------
+*/
 
-    Route::middleware([
-        'auth:sanctum',
-        'role:1'
-    ])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    'role:1'
+])->group(function () {
 
-        Route::get(
-            '/super-admin/admins',
-            [SuperAdminController::class, 'index']
-        );
+    Route::get(
+        '/super-admin/admins',
+        [SuperAdminController::class, 'index']
+    );
 
-        Route::post(
-            '/super-admin/admins',
-            [SuperAdminController::class, 'store']
-        );
+    Route::post(
+        '/super-admin/admins',
+        [SuperAdminController::class, 'store']
+    );
 
-        Route::patch(
-            '/super-admin/admins/{id}/activate',
-            [SuperAdminController::class, 'activate']
-        );
+    Route::patch(
+        '/super-admin/admins/{id}/activate',
+        [SuperAdminController::class, 'activate']
+    );
 
-        Route::patch(
-            '/super-admin/admins/{id}/deactivate',
-            [SuperAdminController::class, 'deactivate']
-        );
+    Route::patch(
+        '/super-admin/admins/{id}/deactivate',
+        [SuperAdminController::class, 'deactivate']
+    );
 
-        Route::delete(
-            '/super-admin/admins/{id}',
-            [SuperAdminController::class, 'fire']
-        );
-    });
+    Route::delete(
+        '/super-admin/admins/{id}',
+        [SuperAdminController::class, 'fire']
+    );
+});
 
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN WASTE CATEGORY MANAGEMENT
-    |--------------------------------------------------------------------------
-    */
+/*
+|--------------------------------------------------------------------------
+| ADMIN WASTE CATEGORY MANAGEMENT
+|--------------------------------------------------------------------------
+*/
 
-    Route::middleware([
-        'auth:sanctum',
-        'role:1,2'
-    ])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    'role:1,2'
+])->group(function () {
 
-        Route::post(
-            '/waste-categories',
-            [WasteCategoryController::class, 'store']
-        );
+    Route::post(
+        '/waste-categories',
+        [WasteCategoryController::class, 'store']
+    );
 
-        Route::put(
-            '/waste-categories/{id}',
-            [WasteCategoryController::class, 'update']
-        );
+    Route::put(
+        '/waste-categories/{id}',
+        [WasteCategoryController::class, 'update']
+    );
 
-        Route::delete(
-            '/waste-categories/{id}',
-            [WasteCategoryController::class, 'destroy']
-        );
-    });
-
+    Route::delete(
+        '/waste-categories/{id}',
+        [WasteCategoryController::class, 'destroy']
+    );
 });

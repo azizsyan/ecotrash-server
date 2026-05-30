@@ -25,3 +25,10 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Flutter (ecotrash_flutter/)
+ecotrash_flutter/.dart_tool/
+ecotrash_flutter/.flutter-plugins
+ecotrash_flutter/.flutter-plugins-dependencies
+ecotrash_flutter/build/
+ecotrash_flutter/.idea/
