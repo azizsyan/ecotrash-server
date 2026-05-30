@@ -214,9 +214,8 @@ class DemoDataSeeder extends Seeder
                     'city' => 'Bandung',
                     'province' => 'Jawa Barat',
 
-                    'rating' => $profile['rating'],
-                    'performance_score' =>
-                        $profile['performance_score'],
+                    'rating' => 0.0,
+                    'performance_score' => 0.0,
 
                     'is_verified' => true,
 
@@ -237,7 +236,7 @@ class DemoDataSeeder extends Seeder
     {
         $sellers = User::where('role_id', 3)->get();
 
-        $couriers = User::where('role_id', 4)->get();
+        $couriers = User::where('role_id', 4)->get()->values();
 
         $categories =
             WasteCategory::all();
@@ -287,7 +286,7 @@ class DemoDataSeeder extends Seeder
                 )->first();
 
             $courier =
-                $couriers->random();
+                $couriers[$index % $couriers->count()];
 
             $estimatedWeight =
                 rand(5, 30);

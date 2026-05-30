@@ -79,4 +79,12 @@ class CourierProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Calculate total waste collected by this courier
+    public function totalWasteCollected()
+    {
+        return $this->user?->courierOrders()
+            ->whereIn('status', ['PICKED_UP', 'DELIVERED', 'COMPLETED'])
+            ->sum('actual_total_weight') ?? 0;
+    }
 }

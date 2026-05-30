@@ -112,7 +112,7 @@
 
             </div>
 
-            {{-- Performance --}}
+            {{-- Total Waste Collected --}}
             <div class="col-md-4">
 
                 <div class="card border-0 shadow-sm rounded-4 h-100">
@@ -120,11 +120,11 @@
                     <div class="card-body">
 
                         <small class="text-muted d-block mb-2">
-                            Performance Score
+                            Total Sampah Diambil
                         </small>
 
                         <h2 class="fw-bold text-success mb-0">
-                            {{ number_format($courier->courierProfile?->performance_score ?? 0, 2) }}
+                            {{ number_format($courier->courierProfile?->totalWasteCollected() ?? 0, 2) }} kg
                         </h2>
 
                     </div>

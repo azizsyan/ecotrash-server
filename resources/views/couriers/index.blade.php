@@ -173,7 +173,7 @@
                             <th>Vehicle</th>
                             <th>City</th>
                             <th>Rating</th>
-                            <th>Performance</th>
+                            <th>Total Sampah Diambil</th>
                             <th>Status</th>
                             <th>Bergabung</th>
                             <th class="text-center pe-4">
@@ -235,11 +235,11 @@
 
                                 </td>
 
-                                {{-- Performance --}}
+                                {{-- Total Waste Collected --}}
                                 <td>
 
                                     <span class="fw-semibold text-success">
-                                        {{ number_format($courier->courierProfile?->performance_score ?? 0, 2) }}
+                                        {{ number_format($courier->courierProfile?->totalWasteCollected() ?? 0, 2) }} kg
                                     </span>
 
                                 </td>

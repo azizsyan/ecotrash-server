@@ -15,6 +15,7 @@
                 'DELIVERED' => 'Diantar',
                 'PICKED_UP' => 'Diambil',
                 'CANCELLED' => 'Dibatalkan',
+                'PAID' => 'Dibayar',
                 default => $status
             };
         }
@@ -478,7 +479,7 @@
                         </div>
 
                         <div class="performance-score">
-                            {{ number_format($courier->performance_score, 1) }}
+                            {{ number_format($courier->totalWasteCollected(), 2) }} kg
                         </div>
 
                     </div>
