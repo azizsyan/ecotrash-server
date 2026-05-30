@@ -175,6 +175,7 @@
                     <th>Kode</th>
                     <th>Seller</th>
                     <th>Kurir</th>
+                    <th>Jumlah Item</th>
                     <th>Berat</th>
                     <th>Total</th>
                     <th>Status</th>
@@ -203,9 +204,17 @@
                             {{ $order->courier?->name ?? '-' }}
                         </td>
 
+                            <td>
+                                {{ $order->items_count ?? $order->items->count() }}
+                            </td>
+
                         <td>
-                            {{ number_format($order->actual_total_weight ?? 0, 2) }}
-                            Kg
+                            @php
+                                $itemsWeight = $order->items_total_actual_weight ?: $order->items->sum('actual_weight');
+                                $displayWeight = $itemsWeight ?: $order->actual_total_weight ?: $order->estimated_total_weight ?: 0;
+                            @endphp
+
+                            {{ number_format($displayWeight, 2) }} Kg
                         </td>
 
                         <td class="fw-semibold">

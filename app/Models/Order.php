@@ -97,4 +97,16 @@ class Order extends Model
     protected $appends = [
         'pickup_photo_url'
     ];
+
+    // Number of items in the order
+    public function getItemsCountAttribute(): int
+    {
+        return $this->items()->count();
+    }
+
+    // Sum of actual weights from order items (null-safe)
+    public function getItemsTotalActualWeightAttribute(): float
+    {
+        return (float) $this->items()->sum('actual_weight');
+    }
 }

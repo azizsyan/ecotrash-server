@@ -224,42 +224,90 @@
 
 <div class="card border-0 rounded-5 shadow-sm p-4 mb-4">
 
-    <div class="mb-4">
-        <h3 class="fw-bold mb-1">
-            Bukti Pickup Sampah
-        </h3>
+        {{-- Detail Item Pesanan --}}
+        <h4 class="fw-bold mb-3">Detail Item Pesanan</h4>
 
-        <p class="text-muted mb-0">
-            Foto sampah saat diambil kurir
-        </p>
-    </div>
+        @if($order->items && $order->items->isNotEmpty())
 
-    @if($order->pickup_photo)
+            <div class="table-responsive mb-4">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Jenis Sampah</th>
+                            <th class="text-end">Estimasi (Kg)</th>
+                            <th class="text-end">Aktual (Kg)</th>
+                            <th class="text-end">Harga/Kg</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($order->items as $item)
+                            <tr>
+                                <td>
+                                    {{ $item->wasteCategory?->name ?? '—' }}
+                                </td>
+                                <td class="text-end">
+                                    {{ number_format($item->estimated_weight ?? 0, 2) }}
+                                </td>
+                                <td class="text-end">
+                                    {{ number_format($item->actual_weight ?? 0, 2) }}
+                                </td>
+                                <td class="text-end">
+                                    Rp {{ number_format($item->price_per_kg ?? 0, 0, ',', '.') }}
+                                </td>
+                                <td class="text-end">
+                                    Rp {{ number_format($item->subtotal ?? 0, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-        <div class="pickup-image-wrapper">
-            <img
-                src="{{ $order->pickup_photo_url }}"
-                alt="Pickup Photo"
-                class="pickup-image"
-            >
-        </div>
+        @else
 
-    @else
+            <div class="empty-state mb-4">
+                Tidak ada item pesanan tercatat.
+            </div>
 
-        <div class="pickup-empty-state">
+        @endif
 
-            <h5 class="fw-semibold mb-2">
-                Belum ada bukti pickup
-            </h5>
+        <div class="mb-4">
+            <h3 class="fw-bold mb-1">
+                Bukti Pickup Sampah
+            </h3>
 
             <p class="text-muted mb-0">
-                Kurir belum mengunggah foto pickup
-                atau data belum tersedia.
+                Foto sampah saat diambil kurir
             </p>
-
         </div>
 
-    @endif
+        @if($order->pickup_photo)
+
+            <div class="pickup-image-wrapper">
+                <img
+                    src="{{ $order->pickup_photo_url }}"
+                    alt="Pickup Photo"
+                    class="pickup-image"
+                >
+            </div>
+
+        @else
+
+            <div class="pickup-empty-state">
+
+                <h5 class="fw-semibold mb-2">
+                    Belum ada bukti pickup
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Kurir belum mengunggah foto pickup
+                    atau data belum tersedia.
+                </p>
+
+            </div>
+
+        @endif
 
 </div>
 

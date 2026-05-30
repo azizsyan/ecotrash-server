@@ -450,6 +450,8 @@ class DemoDataSeeder extends Seeder
             */
 
             $total = 0;
+            $estimatedSum = 0;
+            $actualSum = 0;
 
             for ($i = 1; $i <= rand(1, 3); $i++) {
 
@@ -497,22 +499,35 @@ class DemoDataSeeder extends Seeder
                 ]);
 
                 $total += $subtotal;
-            }
-
-            if (
-                in_array(
+                $estimatedSum += $estimated;
+                $actualSum += in_array(
                     $status,
                     [
+                        'PICKED_UP',
                         'DELIVERED',
                         'COMPLETED'
                     ]
-                )
-            ) {
-
-                $order->update([
-                    'total_price' => $total
-                ]);
+                ) ? $actual : 0;
             }
+
+            // Update order totals based on created items so values reflect backend logic
+            $updates = [
+                'estimated_total_weight' => $estimatedSum ?: $order->estimated_total_weight,
+            ];
+
+            if (in_array($status, ['PICKED_UP', 'DELIVERED', 'COMPLETED'])) {
+                $updates['actual_total_weight'] = $actualSum ?: $order->actual_total_weight;
+            } else {
+                $updates['actual_total_weight'] = null;
+            }
+
+            if (in_array($status, ['DELIVERED', 'COMPLETED'])) {
+                $updates['total_price'] = $total;
+            } else {
+                $updates['total_price'] = 0;
+            }
+
+            $order->update($updates);
         }
     }
 
