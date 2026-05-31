@@ -176,9 +176,7 @@
                             <th>Total Sampah Diambil</th>
                             <th>Status</th>
                             <th>Bergabung</th>
-                            <th class="text-center pe-4">
-                                Aksi
-                            </th>
+                            <th class="text-center pe-4">Aksi</th>
                         </tr>
 
                     </thead>

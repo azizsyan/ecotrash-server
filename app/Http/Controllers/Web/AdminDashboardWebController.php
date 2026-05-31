@@ -16,7 +16,7 @@ class AdminDashboardWebController extends Controller
         $range =
             request()->get(
                 'range',
-                'today'
+                'all'
             );
 
         $startDate =
@@ -48,14 +48,6 @@ class AdminDashboardWebController extends Controller
             Withdrawal::query();
 
         if ($startDate) {
-
-            $ordersQuery
-                ->whereDate(
-                    'created_at',
-                    '>=',
-                    $startDate
-                );
-
             $withdrawalsQuery
                 ->whereDate(
                     'created_at',
@@ -66,12 +58,31 @@ class AdminDashboardWebController extends Controller
 
         /*
         |--------------------------------------------------------------------------
+        | Filtered Subqueries
+        |--------------------------------------------------------------------------
+        */
+
+        $totalOrdersQuery = clone $ordersQuery;
+        $pendingQuery = clone $ordersQuery;
+        $pickedUpQuery = clone $ordersQuery;
+        $deliveredQuery = clone $ordersQuery;
+        $completedQuery = clone $ordersQuery;
+        $cancelledQuery = clone $ordersQuery;
+
+        if ($startDate) {
+            $totalOrdersQuery->whereDate('created_at', '>=', $startDate);
+            $completedQuery->whereDate('completed_at', '>=', $startDate);
+            $cancelledQuery->whereDate('cancelled_at', '>=', $startDate);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
         | KPI
         |--------------------------------------------------------------------------
         */
 
         $totalRevenue =
-            (clone $ordersQuery)
+            $completedQuery
                 ->where(
                     'status',
                     'COMPLETED'
@@ -81,7 +92,7 @@ class AdminDashboardWebController extends Controller
                 );
 
         $totalOrders =
-            (clone $ordersQuery)
+            $totalOrdersQuery
                 ->count();
 
         /*
@@ -93,7 +104,7 @@ class AdminDashboardWebController extends Controller
         $orderSummary = [
 
             'pending' =>
-                (clone $ordersQuery)
+                $pendingQuery
                     ->where(
                         'status',
                         'PENDING'
@@ -101,7 +112,7 @@ class AdminDashboardWebController extends Controller
                     ->count(),
 
             'picked_up' =>
-                (clone $ordersQuery)
+                $pickedUpQuery
                     ->where(
                         'status',
                         'PICKED_UP'
@@ -109,7 +120,7 @@ class AdminDashboardWebController extends Controller
                     ->count(),
 
             'delivered' =>
-                (clone $ordersQuery)
+                $deliveredQuery
                     ->where(
                         'status',
                         'DELIVERED'
@@ -117,7 +128,7 @@ class AdminDashboardWebController extends Controller
                     ->count(),
 
             'completed' =>
-                (clone $ordersQuery)
+                $completedQuery
                     ->where(
                         'status',
                         'COMPLETED'
@@ -125,7 +136,7 @@ class AdminDashboardWebController extends Controller
                     ->count(),
 
             'cancelled' =>
-                (clone $ordersQuery)
+                $cancelledQuery
                     ->where(
                         'status',
                         'CANCELLED'
@@ -278,7 +289,7 @@ class AdminDashboardWebController extends Controller
         */
 
         $recentOrders =
-            (clone $ordersQuery)
+            (clone $totalOrdersQuery)
                 ->with([
                     'seller'
                 ])

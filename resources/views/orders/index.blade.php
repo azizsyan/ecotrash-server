@@ -180,9 +180,6 @@
                     <th>Total</th>
                     <th>Status</th>
                     <th>Tanggal</th>
-                    <th class="text-center">
-                        Aksi
-                    </th>
                 </tr>
             </thead>
 

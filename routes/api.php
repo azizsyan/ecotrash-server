@@ -40,6 +40,19 @@ Route::post(
     [AuthController::class, 'login']
 );
 
+Route::get(
+    '/storage-proxy/{folder}/{filename}',
+    function ($folder, $filename) {
+        $path = storage_path('app/public/' . $folder . '/' . $filename);
+        if (!file_exists($path)) {
+            abort(404);
+        }
+        $file = file_get_contents($path);
+        $type = mime_content_type($path);
+        return response($file, 200)->header('Content-Type', $type);
+    }
+);
+
 /*
 |--------------------------------------------------------------------------
 | AUTHENTICATED ROUTES
@@ -148,6 +161,16 @@ Route::middleware([
         '/orders/{id}/map',
         [OrderController::class, 'map']
     );
+
+    Route::get(
+        '/orders',
+        [OrderController::class, 'index']
+    );
+
+    Route::get(
+        '/orders/{id}',
+        [OrderController::class, 'show']
+    );
 });
 
 /*
@@ -198,19 +221,9 @@ Route::middleware([
     |--------------------------------------------------------------------------
     */
 
-    Route::get(
-        '/orders',
-        [OrderController::class, 'index']
-    );
-
     Route::post(
         '/orders',
         [OrderController::class, 'store']
-    );
-
-    Route::get(
-        '/orders/{id}',
-        [OrderController::class, 'show']
     );
 
     Route::patch(
@@ -244,6 +257,7 @@ Route::middleware([
         '/withdrawals',
         [WithdrawalController::class, 'store']
     );
+});
 
     /*
     |--------------------------------------------------------------------------
@@ -487,5 +501,3 @@ Route::middleware([
             [WasteCategoryController::class, 'destroy']
         );
     });
-
-});

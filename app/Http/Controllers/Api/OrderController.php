@@ -52,15 +52,20 @@ class OrderController extends Controller
     */
     public function index(Request $request)
     {
+        $user = $request->user();
+
         $orders = Order::with([
             'items.wasteCategory',
             'sellerAddress',
-            'courier'
+            'courier',
+            'seller'
         ])
-            ->where(
-                'seller_id',
-                $request->user()->id
-            )
+            ->when($user->role_id == 3, function ($query) use ($user) {
+                return $query->where('seller_id', $user->id);
+            })
+            ->when($user->role_id == 4, function ($query) use ($user) {
+                return $query->where('courier_id', $user->id);
+            })
             ->latest()
             ->get();
 
@@ -108,15 +113,20 @@ class OrderController extends Controller
         Request $request,
         string $id
     ) {
+        $user = $request->user();
+
         $order = Order::with([
             'items.wasteCategory',
             'sellerAddress',
-            'courier'
+            'courier',
+            'seller'
         ])
-            ->where(
-                'seller_id',
-                $request->user()->id
-            )
+            ->when($user->role_id == 3, function ($query) use ($user) {
+                return $query->where('seller_id', $user->id);
+            })
+            ->when($user->role_id == 4, function ($query) use ($user) {
+                return $query->where('courier_id', $user->id);
+            })
             ->find($id);
 
         if (!$order) {

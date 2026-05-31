@@ -194,7 +194,7 @@
                             Bergabung
                         </th>
 
-                        <th style="padding:20px;text-align:left;">
+                        <th style="padding:20px;text-align:center;">
                             Aksi
                         </th>
                     </tr>
@@ -286,14 +286,10 @@
                                 {{ $admin->created_at->format('d M Y') }}
                             </td>
 
-                            <td>
-
-                                <div class="d-flex gap-2 align-items-center">
-                                    <a href="{{ route('admin-management.show', $admin->id) }}" class="action-btn info">
-                                        Detail
-                                    </a>
-                                </div>
-
+                            <td class="text-center">
+                                <a href="{{ route('admin-management.show', $admin->id) }}" class="btn btn-outline-success btn-sm">
+                                    Detail
+                                </a>
                             </td>
 
                         </tr>
