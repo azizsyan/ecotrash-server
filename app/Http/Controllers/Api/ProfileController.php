@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET PROFILE
-    |--------------------------------------------------------------------------
-    */
+    /*GET PROFILE*/
     public function show(
         Request $request
     ) {
@@ -34,11 +30,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE PROFILE
-    |--------------------------------------------------------------------------
-    */
+    /*UPDATE PROFILE*/
     public function update(
         Request $request
     ) {
@@ -94,9 +86,7 @@ class ProfileController extends Controller
                     'nullable|string|max:100',
             ]);
 
-        // ======================
-        // PHOTO
-        // ======================
+        //PHOTO
         $photoPath =
             $user
                 ->profile_photo;
@@ -118,9 +108,7 @@ class ProfileController extends Controller
                     );
         }
 
-        // ======================
-        // USER UPDATE
-        // ======================
+        //USER UPDATE
         $user->update([
 
             'name' =>
@@ -142,9 +130,7 @@ class ProfileController extends Controller
                 $photoPath,
         ]);
 
-        // ======================
-        // COURIER PROFILE
-        // ======================
+        //COURIER PROFILE
         if (
             $user->role_id == 4
         ) {
@@ -195,11 +181,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CHANGE PASSWORD
-    |--------------------------------------------------------------------------
-    */
+    /*CHANGE PASSWORD*/
     public function changePassword(
         Request $request
     ) {

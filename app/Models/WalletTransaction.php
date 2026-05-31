@@ -20,11 +20,7 @@ class WalletTransaction extends Model
         'amount' => 'decimal:2',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONSHIP
-    |--------------------------------------------------------------------------
-    */
+    /* RELATIONSHIP */
 
     // Transaction belongs to wallet
     public function wallet(): BelongsTo

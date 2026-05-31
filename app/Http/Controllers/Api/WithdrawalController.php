@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class WithdrawalController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | REQUEST WITHDRAWAL
-    |--------------------------------------------------------------------------
-    */
+    /*REQUEST WITHDRAWAL*/
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -28,9 +24,7 @@ class WithdrawalController extends Controller
 
         $wallet = $user->wallet;
 
-        // ======================
-// CHECK PENDING WITHDRAWAL
-// ======================
+        //CHECK PENDING WITHDRAWAL
 
         $hasPendingWithdrawal =
             Withdrawal::where(
@@ -124,11 +118,7 @@ class WithdrawalController extends Controller
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | GET MY WITHDRAWALS
-    |--------------------------------------------------------------------------
-    */
+    /*GET MY WITHDRAWALS*/
     public function index(Request $request)
     {
         return response()->json([

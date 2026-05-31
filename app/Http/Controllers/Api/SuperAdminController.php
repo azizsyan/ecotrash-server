@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class SuperAdminController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | LIST ADMINS
-    |--------------------------------------------------------------------------
-    */
+    /*LIST ADMINS*/
     public function index()
     {
         $admins =
@@ -35,11 +31,7 @@ User::with('role')
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE ADMIN
-    |--------------------------------------------------------------------------
-    */
+    /*CREATE ADMIN*/
     public function store(
         Request $request
     ) {
@@ -104,11 +96,7 @@ User::with('role')
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | ACTIVATE ADMIN
-    |--------------------------------------------------------------------------
-    */
+    /*ACTIVATE ADMIN*/
     public function activate(
         string $id
     ) {
@@ -152,11 +140,7 @@ User::with('role')
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DEACTIVATE ADMIN
-    |--------------------------------------------------------------------------
-    */
+    /*DEACTIVATE ADMIN*/
     public function deactivate(
         Request $request,
         string $id
@@ -176,7 +160,7 @@ User::with('role')
             ], 404);
         }
 
-        // prevent self deactivate
+        //prevent self deactivate
         if (
             $request
                 ->user()
@@ -216,11 +200,7 @@ User::with('role')
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | FIRE ADMIN
-    |--------------------------------------------------------------------------
-    */
+    /*FIRE ADMIN*/
     public function fire(
         Request $request,
         string $id
@@ -240,7 +220,7 @@ User::with('role')
             ], 404);
         }
 
-        // prevent self delete
+        //prevent self delete
         if (
             $request
                 ->user()

@@ -15,9 +15,7 @@ class CourierLocationController extends Controller
         $user =
             $request->user();
 
-        // ======================
         // ONLY COURIER
-        // ======================
         if (
             $user->role_id != 4
         ) {
@@ -81,9 +79,7 @@ class CourierLocationController extends Controller
         $user =
             $request->user();
 
-        // ======================
         // COURIER ONLY
-        // ======================
         if (
             $user->role_id != 4
         ) {
@@ -94,9 +90,7 @@ class CourierLocationController extends Controller
             ], 403);
         }
 
-        // ======================
         // ACTIVE CHECK
-        // ======================
         if (
             !$user->is_active
         ) {

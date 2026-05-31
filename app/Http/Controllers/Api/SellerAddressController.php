@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class SellerAddressController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET ALL USER ADDRESS
-    |--------------------------------------------------------------------------
-    */
+    /*GET ALL USER ADDRESS*/
     public function index(Request $request)
     {
         $addresses = SellerAddress::where(
@@ -25,11 +21,7 @@ class SellerAddressController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SHOW DETAIL
-    |--------------------------------------------------------------------------
-    */
+    /*SHOW DETAIL*/
     public function show(
         Request $request,
         string $id
@@ -44,11 +36,7 @@ class SellerAddressController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | STORE
-    |--------------------------------------------------------------------------
-    */
+    /*STORE*/
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -94,11 +82,7 @@ class SellerAddressController extends Controller
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE
-    |--------------------------------------------------------------------------
-    */
+    /*UPDATE*/
     public function update(
         Request $request,
         string $id
@@ -137,11 +121,7 @@ class SellerAddressController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DELETE
-    |--------------------------------------------------------------------------
-    */
+    /*DELETE*/
     public function destroy(
         Request $request,
         string $id

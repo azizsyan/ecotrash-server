@@ -16,20 +16,12 @@ return new class extends Migration {
                 ->constrained()
                 ->onDelete('cascade');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Vehicle
-            |--------------------------------------------------------------------------
-            */
+            /* Vehicle */
 
             $table->string('vehicle_type');
             $table->string('vehicle_plate');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Identity Verification
-            |--------------------------------------------------------------------------
-            */
+            /* Identity Verification */
 
             $table->string('ktp_number');
             $table->string('ktp_photo');
@@ -39,21 +31,13 @@ return new class extends Migration {
 
             $table->string('face_photo');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Address
-            |--------------------------------------------------------------------------
-            */
+            /* Address */
 
             $table->text('address');
             $table->string('city');
             $table->string('province');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Metrics
-            |--------------------------------------------------------------------------
-            */
+            /* Metrics */
 
             $table->decimal(
                 'rating',
@@ -71,11 +55,7 @@ return new class extends Migration {
                 'is_verified'
             )->default(false);
 
-            /*
-            |--------------------------------------------------------------------------
-            | Realtime Location
-            |--------------------------------------------------------------------------
-            */
+            /* Realtime Location */
 
             $table->decimal(
                 'current_latitude',

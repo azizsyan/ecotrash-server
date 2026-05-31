@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminCourierController
     extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | LIST COURIERS
-    |--------------------------------------------------------------------------
-    */
+    /*LIST COURIERS*/
     public function index()
     {
         $couriers =
@@ -40,11 +36,7 @@ class AdminCourierController
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE COURIER
-    |--------------------------------------------------------------------------
-    */
+    /*CREATE COURIER*/
     public function store(
         Request $request
     ) {
@@ -80,11 +72,7 @@ class AdminCourierController
                     'required|string|max:100',
             ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | CREATE USER
-        |--------------------------------------------------------------------------
-        */
+        /*CREATE USER*/
         $courier =
             User::create([
 
@@ -120,11 +108,7 @@ class AdminCourierController
                     false,
             ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | CREATE COURIER PROFILE
-        |--------------------------------------------------------------------------
-        */
+        /*CREATE COURIER PROFILE*/
         CourierProfile::create([
 
             'user_id' =>
@@ -159,11 +143,7 @@ class AdminCourierController
                 true,
         ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | CREATE WALLET
-        |--------------------------------------------------------------------------
-        */
+        /*CREATE WALLET*/
         Wallet::create([
             'user_id' =>
                 $courier->id,
@@ -184,11 +164,7 @@ class AdminCourierController
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | ACTIVATE COURIER
-    |--------------------------------------------------------------------------
-    */
+    /*ACTIVATE COURIER*/
     public function activate(
         string $id
     ) {
@@ -217,11 +193,7 @@ class AdminCourierController
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DEACTIVATE COURIER
-    |--------------------------------------------------------------------------
-    */
+    /*DEACTIVATE COURIER*/
     public function deactivate(
         string $id
     ) {

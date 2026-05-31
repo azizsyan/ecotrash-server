@@ -28,12 +28,7 @@ class DemoDataSeeder extends Seeder
         $this->seedWithdrawals();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SELLER ADDRESS
-    |--------------------------------------------------------------------------
-    */
-
+    /* SELLER ADDRESS */
     private function seedSellerAddresses(): void
     {
         $sellers = User::where('role_id', 3)->get();
@@ -95,11 +90,7 @@ class DemoDataSeeder extends Seeder
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | WALLET
-    |--------------------------------------------------------------------------
-    */
+    /*WALLET*/
 
     private function seedWallets(): void
     {
@@ -126,11 +117,7 @@ class DemoDataSeeder extends Seeder
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | COURIER PROFILE
-    |--------------------------------------------------------------------------
-    */
+    /* COURIER PROFILE */
 
     private function seedCourierProfiles(): void
     {
@@ -181,7 +168,6 @@ class DemoDataSeeder extends Seeder
             ],
         ];
 
-        // Image variants for each courier (1-6)
         $ktpImages = ['ktp.jpg', 'ktp2.jpg', 'ktp3.jpg', 'ktp4.jpg', 'ktp5.jpg', 'ktp6.jpg'];
         $simImages = ['sim.jpg', 'sim2.jpg', 'sim3.jpg', 'sim4.jpg', 'sim5.jpg', 'sim6.jpg'];
         $selfieImages = ['selfie.jpg', 'selfie2.jpg', 'selfie3.jpg', 'selfie4.jpg', 'selfie5.jpg', 'selfie6.jpg'];
@@ -226,11 +212,7 @@ class DemoDataSeeder extends Seeder
         }
     }
 
-    /*
-|--------------------------------------------------------------------------
-| ORDERS
-|--------------------------------------------------------------------------
-*/
+    /*ORDERS*/
 
     private function seedOrders(): void
     {
@@ -241,7 +223,6 @@ class DemoDataSeeder extends Seeder
         $categories =
             WasteCategory::all();
 
-        // Unique pickup images for each order
         $pickupPhotos = [];
         for ($i = 1; $i <= 20; $i++) {
             $pickupPhotos[] = 'pickup/pickup' . $i . '.jpg';
@@ -443,11 +424,7 @@ class DemoDataSeeder extends Seeder
                 'updated_at' => $createdAt,
             ]);
 
-            /*
-            |--------------------------------------------------------------------------
-            | ORDER ITEMS
-            |--------------------------------------------------------------------------
-            */
+            /* ORDER ITEMS */
 
             $total = 0;
             $estimatedSum = 0;
@@ -510,7 +487,6 @@ class DemoDataSeeder extends Seeder
                 ) ? $actual : 0;
             }
 
-            // Update order totals based on created items so values reflect backend logic
             $updates = [
                 'estimated_total_weight' => $estimatedSum ?: $order->estimated_total_weight,
             ];
@@ -531,11 +507,7 @@ class DemoDataSeeder extends Seeder
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | WITHDRAWALS
-    |--------------------------------------------------------------------------
-    */
+    /* WITHDRAWALS */
 
     private function seedWithdrawals(): void
     {

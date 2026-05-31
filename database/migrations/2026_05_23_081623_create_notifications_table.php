@@ -38,9 +38,7 @@ return new class extends Migration {
                     'ORDER'
                 );
 
-                // ======================
                 // READ STATUS
-                // ======================
                 $table->boolean(
                     'is_read'
                 )->default(
@@ -51,9 +49,7 @@ return new class extends Migration {
                     'read_at'
                 )->nullable();
 
-                // ======================
-                // EXTRA DATA
-                // ======================
+                /* EXTRA DATA */
                 $table->json(
                     'data'
                 )->nullable();

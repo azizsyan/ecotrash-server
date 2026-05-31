@@ -25,11 +25,7 @@ class WebAuthController extends Controller
                 'password' => 'required',
             ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Login Attempt
-        |--------------------------------------------------------------------------
-        */
+        /* Login Attempt */
 
         if (
             !Auth::attempt(
@@ -46,11 +42,7 @@ class WebAuthController extends Controller
 
         $user = Auth::user();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Cek akun aktif
-        |--------------------------------------------------------------------------
-        */
+        /* Cek akun aktif */
 
         if (
             !$user->is_active
@@ -65,11 +57,7 @@ class WebAuthController extends Controller
                 ]);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Update Online Status
-        |--------------------------------------------------------------------------
-        */
+        /* Update Online Status */
 
         $user->update([
             'is_online' => true

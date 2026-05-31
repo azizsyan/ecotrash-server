@@ -51,11 +51,7 @@ class CourierWebController extends Controller
             ->latest()
             ->paginate(10);
 
-        /*
-        |-------------------------------------------------
-        | Stats
-        |-------------------------------------------------
-        */
+        /*Stats*/
 
         $totalCourier = User::whereHas(
             'role',
@@ -143,11 +139,7 @@ public function store(Request $request)
         'province' => 'required|string|max:255',
     ]);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Upload Photos
-    |--------------------------------------------------------------------------
-    */
+    /*Upload Photos*/
 
     $ktpPhoto = $request
         ->file('ktp_photo')
@@ -161,22 +153,14 @@ public function store(Request $request)
         ->file('face_photo')
         ->store('couriers/selfie', 'public');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Get Courier Role
-    |--------------------------------------------------------------------------
-    */
+    /*Get Courier Role*/
 
     $courierRole = Role::where(
         'slug',
         'courier'
     )->first();
 
-    /*
-    |--------------------------------------------------------------------------
-    | Create User
-    |--------------------------------------------------------------------------
-    */
+    /*Create User*/
 
     $user = User::create([
         'role_id' => $courierRole->id,
@@ -188,11 +172,7 @@ public function store(Request $request)
         'is_online' => false,
     ]);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Create Courier Profile
-    |--------------------------------------------------------------------------
-    */
+    /*Create Courier Profile*/
 
     CourierProfile::create([
         'user_id' => $user->id,

@@ -58,11 +58,7 @@ class User extends Authenticatable
         });
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONSHIPS
-    |--------------------------------------------------------------------------
-    */
+    /* RELATIONSHIPS */
 
     // User belongs to Role
     public function role(): BelongsTo

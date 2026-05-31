@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class WalletController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET MY WALLET
-    |--------------------------------------------------------------------------
-    */
+    /*GET MY WALLET*/
     public function myWallet(
         Request $request
     ) {
@@ -53,11 +49,7 @@ class WalletController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | GET TRANSACTIONS ONLY
-    |--------------------------------------------------------------------------
-    */
+    /*GET TRANSACTIONS ONLY*/
     public function transactions(Request $request)
     {
         $wallet = $request->user()->wallet;

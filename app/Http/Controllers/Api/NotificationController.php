@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET MY NOTIFICATIONS
-    |--------------------------------------------------------------------------
-    */
+    /*GET MY NOTIFICATIONS*/
     public function index(Request $request)
     {
         try {
@@ -44,11 +40,7 @@ class NotificationController extends Controller
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MARK AS READ
-    |--------------------------------------------------------------------------
-    */
+    /*MARK AS READ*/
     public function markAsRead(
         Request $request,
         string $id

@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class WasteCategoryController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET ALL
-    |--------------------------------------------------------------------------
-    */
+    /*GET ALL*/
     public function index()
     {
         $categories = WasteCategory::where(
@@ -25,11 +21,7 @@ class WasteCategoryController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | STORE
-    |--------------------------------------------------------------------------
-    */
+    /*STORE*/
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -54,11 +46,7 @@ class WasteCategoryController extends Controller
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE
-    |--------------------------------------------------------------------------
-    */
+    /*UPDATE*/
     public function update(
         Request $request,
         string $id
@@ -80,11 +68,7 @@ class WasteCategoryController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DELETE
-    |--------------------------------------------------------------------------
-    */
+    /*DELETE*/
     public function destroy(string $id)
     {
         $category =

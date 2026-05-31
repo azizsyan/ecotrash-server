@@ -45,11 +45,7 @@ class OrderController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | GET ALL MY ORDERS
-    |--------------------------------------------------------------------------
-    */
+    /*GET ALL MY ORDERS*/
     public function index(Request $request)
     {
         $user = $request->user();
@@ -79,11 +75,7 @@ class OrderController extends Controller
         ]);
     }
 
-    /*
-|--------------------------------------------------------------------------
-| AVAILABLE ORDERS FOR COURIER
-|--------------------------------------------------------------------------
-*/
+    /*AVAILABLE ORDERS FOR COURIER*/
     public function availableOrders()
     {
         $orders = Order::with([
@@ -104,11 +96,7 @@ class OrderController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SHOW DETAIL
-    |--------------------------------------------------------------------------
-    */
+    /*SHOW DETAIL*/
     public function show(
         Request $request,
         string $id
@@ -147,11 +135,7 @@ class OrderController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE ORDER
-    |--------------------------------------------------------------------------
-    */
+    /*CREATE ORDER*/
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -184,10 +168,7 @@ class OrderController extends Controller
                 $validated['seller_address_id']
             );
 
-        // =========================
-// CHECK ACTIVE SELLER ORDER
-// =========================
-
+        //CHECK ACTIVE SELLER ORDER
         $hasActiveOrder = Order::where(
             'seller_id',
             $request->user()->id
@@ -208,11 +189,7 @@ class OrderController extends Controller
             ], 422);
         }
 
-
-        // =========================
-// CHECK AVAILABLE COURIER
-// =========================
-
+        //CHECK AVAILABLE COURIER
         $availableCourier = User::whereHas(
             'role',
             function ($query) {
@@ -390,9 +367,7 @@ class OrderController extends Controller
                 ], 404);
             }
 
-            // ======================
-// SELLER CANCEL
-// ======================
+            //SELLER CANCEL
             if ($user->role_id == 3) {
 
                 if (
@@ -422,9 +397,7 @@ class OrderController extends Controller
                 }
             }
 
-            // ======================
-            // COURIER CANCEL
-            // ======================
+            //COURIER CANCEL
             if ($user->role_id == 4) {
 
                 if (
@@ -529,9 +502,7 @@ class OrderController extends Controller
         Request $request,
         string $id
     ) {
-        // =========================
-// COURIER ACTIVE CHECK
-// =========================
+        //COURIER ACTIVE CHECK
         if (
             !$request->user()
                 ->is_active
@@ -543,10 +514,7 @@ class OrderController extends Controller
             ], 403);
         }
 
-        // =========================
-// CHECK ACTIVE COURIER ORDER
-// =========================
-
+        //CHECK ACTIVE COURIER ORDER
         $hasActiveOrder = Order::where(
             'courier_id',
             $request->user()->id
@@ -985,9 +953,7 @@ class OrderController extends Controller
             ], 404);
         }
 
-        // ======================
-        // ACCESS CONTROL
-        // ======================
+        //ACCESS CONTROL
         if (
 
             $user->role_id == 3 &&

@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE REVIEW
-    |--------------------------------------------------------------------------
-    */
+    /*CREATE REVIEW*/
     public function store(
         Request $request
     ) {
@@ -21,9 +17,7 @@ class ReviewController extends Controller
         $user =
             $request->user();
 
-        // ======================
-        // ONLY SELLER
-        // ======================
+        //ONLY SELLER
         if (
             $user->role_id != 3
         ) {
@@ -47,9 +41,7 @@ class ReviewController extends Controller
                     'nullable|string|max:1000',
             ]);
 
-        // ======================
-        // FIND ORDER
-        // ======================
+        //FIND ORDER
         $order =
             Order::where(
                 'id',
@@ -71,9 +63,7 @@ class ReviewController extends Controller
             ], 404);
         }
 
-        // ======================
-        // ORDER MUST COMPLETED
-        // ======================
+        //ORDER MUST COMPLETED
         if (
             $order->status
             !== 'COMPLETED'
@@ -85,9 +75,7 @@ class ReviewController extends Controller
             ], 422);
         }
 
-        // ======================
-        // PREVENT DUPLICATE
-        // ======================
+        //PREVENT DUPLICATE
         $alreadyReviewed =
             Review::where(
                 'order_id',
@@ -105,9 +93,7 @@ class ReviewController extends Controller
             ], 422);
         }
 
-        // ======================
-        // CREATE REVIEW
-        // ======================
+        //CREATE REVIEW
         $review =
             Review::create([
 
@@ -131,11 +117,7 @@ class ReviewController extends Controller
                     ] ?? null,
             ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | UPDATE COURIER SCORE
-        |--------------------------------------------------------------------------
-        */
+        //UPDATE COURIER SCORE
         $courierProfile =
             $order
                 ->courier
@@ -192,11 +174,7 @@ class ReviewController extends Controller
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | COURIER REVIEWS
-    |--------------------------------------------------------------------------
-    */
+    /*COURIER REVIEWS*/
     public function myReceivedReviews(
         Request $request
     ) {

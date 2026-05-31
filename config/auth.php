@@ -4,10 +4,8 @@ use App\Models\User;
 
 return [
 
+    /* Authentication Defaults */
     /*
-    |--------------------------------------------------------------------------
-    | Authentication Defaults
-    |--------------------------------------------------------------------------
     |
     | This option defines the default authentication "guard" and password
     | reset "broker" for your application. You may change these values
@@ -20,10 +18,8 @@ return [
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
+    /* Authentication Guards */
     /*
-    |--------------------------------------------------------------------------
-    | Authentication Guards
-    |--------------------------------------------------------------------------
     |
     | Next, you may define every authentication guard for your application.
     | Of course, a great default configuration has been defined for you
@@ -44,10 +40,8 @@ return [
         ],
     ],
 
+    /* User Providers */
     /*
-    |--------------------------------------------------------------------------
-    | User Providers
-    |--------------------------------------------------------------------------
     |
     | All authentication guards have a user provider, which defines how the
     | users are actually retrieved out of your database or other storage
@@ -73,10 +67,8 @@ return [
         // ],
     ],
 
+    /* Resetting Passwords */
     /*
-    |--------------------------------------------------------------------------
-    | Resetting Passwords
-    |--------------------------------------------------------------------------
     |
     | These configuration options specify the behavior of Laravel's password
     | reset functionality, including the table utilized for token storage

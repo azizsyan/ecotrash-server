@@ -35,11 +35,7 @@ class AdminDashboardWebController extends Controller
                 null
             };
 
-        /*
-        |--------------------------------------------------------------------------
-        | Base Query
-        |--------------------------------------------------------------------------
-        */
+        /* Base Query */
 
         $ordersQuery =
             Order::query();
@@ -56,11 +52,7 @@ class AdminDashboardWebController extends Controller
                 );
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Filtered Subqueries
-        |--------------------------------------------------------------------------
-        */
+        /* Filtered Subqueries */
 
         $totalOrdersQuery = clone $ordersQuery;
         $pendingQuery = clone $ordersQuery;
@@ -75,11 +67,7 @@ class AdminDashboardWebController extends Controller
             $cancelledQuery->whereDate('cancelled_at', '>=', $startDate);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | KPI
-        |--------------------------------------------------------------------------
-        */
+        /* KPI */
 
         $totalRevenue =
             $completedQuery
@@ -95,11 +83,7 @@ class AdminDashboardWebController extends Controller
             $totalOrdersQuery
                 ->count();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Order Summary
-        |--------------------------------------------------------------------------
-        */
+        /* Order Summary */
 
         $orderSummary = [
 
@@ -144,11 +128,7 @@ class AdminDashboardWebController extends Controller
                     ->count(),
         ];
 
-        /*
-        |--------------------------------------------------------------------------
-        | Chart Data
-        |--------------------------------------------------------------------------
-        */
+        /* Chart Data */
 
         $chartLabels = [];
         $chartData = [];
@@ -282,11 +262,7 @@ class AdminDashboardWebController extends Controller
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Recent Data
-        |--------------------------------------------------------------------------
-        */
+        /* Recent Data */
 
         $recentOrders =
             (clone $totalOrdersQuery)
@@ -306,11 +282,7 @@ class AdminDashboardWebController extends Controller
                 ->take(5)
                 ->get();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Top Couriers
-        |--------------------------------------------------------------------------
-        */
+        /* Top Couriers */
 
         $topCouriers =
             CourierProfile::with([

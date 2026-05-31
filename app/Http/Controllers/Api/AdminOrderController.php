@@ -20,9 +20,7 @@ class AdminOrderController
             'items.wasteCategory'
         ]);
 
-        // ======================
         // FILTER STATUS
-        // ======================
         if (
             $request->filled(
                 'status'
@@ -35,9 +33,7 @@ class AdminOrderController
             );
         }
 
-        // ======================
         // FILTER SELLER
-        // ======================
         if (
             $request->filled(
                 'seller_id'
@@ -50,9 +46,7 @@ class AdminOrderController
             );
         }
 
-        // ======================
         // FILTER COURIER
-        // ======================
         if (
             $request->filled(
                 'courier_id'
@@ -65,9 +59,7 @@ class AdminOrderController
             );
         }
 
-        // ======================
         // SEARCH ORDER CODE
-        // ======================
         if (
             $request->filled(
                 'search'
@@ -83,9 +75,7 @@ class AdminOrderController
             );
         }
 
-        // ======================
         // FILTER DATE
-        // ======================
         if (
             $request->filled(
                 'date'

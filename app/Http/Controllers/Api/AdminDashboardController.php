@@ -13,11 +13,7 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        /*
-        |--------------------------------------------------------------------------
-        | REVENUE
-        |--------------------------------------------------------------------------
-        */
+        /*REVENUE*/
         $totalRevenue =
             Order::where(
                 'status',
@@ -40,11 +36,7 @@ class AdminDashboardController extends Controller
                     'total_price'
                 );
 
-        /*
-        |--------------------------------------------------------------------------
-        | WALLET PAYOUT
-        |--------------------------------------------------------------------------
-        */
+        /*WALLET PAYOUT*/
         $totalWalletPayout =
             WalletTransaction::where(
                 'type',
@@ -54,11 +46,7 @@ class AdminDashboardController extends Controller
                     'amount'
                 );
 
-        /*
-        |--------------------------------------------------------------------------
-        | COURIER RATING
-        |--------------------------------------------------------------------------
-        */
+        /*COURIER RATING*/
         $avgCourierRating =
             CourierProfile::where(
                 'rating',
@@ -76,9 +64,7 @@ class AdminDashboardController extends Controller
 
             'data' => [
 
-                // ======================
                 // USER
-                // ======================
                 'total_users' =>
                     User::count(),
 
@@ -105,9 +91,7 @@ class AdminDashboardController extends Controller
                         )
                         ->count(),
 
-                // ======================
                 // ORDER
-                // ======================
                 'total_orders' =>
                     Order::count(),
 
@@ -135,9 +119,7 @@ class AdminDashboardController extends Controller
                         today()
                     )->count(),
 
-                // ======================
                 // MONEY
-                // ======================
                 'total_revenue' =>
                     $totalRevenue,
 
@@ -147,18 +129,14 @@ class AdminDashboardController extends Controller
                 'total_wallet_payout' =>
                     $totalWalletPayout,
 
-                // ======================
                 // COURIER PERFORMANCE
-                // ======================
                 'avg_courier_rating' =>
                     round(
                         $avgCourierRating,
                         2
                     ),
 
-                // ======================
                 // WITHDRAWAL
-                // ======================
                 'pending_withdrawals' =>
                     Withdrawal::where(
                         'status',
