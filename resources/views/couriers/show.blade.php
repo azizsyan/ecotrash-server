@@ -169,7 +169,7 @@
         {{-- Vehicle + Location --}}
         <div class="row g-4">
 
-            {{-- Vehicle --}}
+            {{-- Vehicle & Identity --}}
             <div class="col-lg-6">
 
                 <div class="card border-0 shadow-sm rounded-4 h-100">
@@ -177,31 +177,47 @@
                     <div class="card-body p-4">
 
                         <h3 class="fw-bold mb-4">
-                            Informasi Kendaraan
+                            Informasi Kendaraan & Identitas
                         </h3>
 
-                        <div class="mb-4">
-
-                            <small class="text-muted d-block">
-                                Vehicle Type
-                            </small>
-
-                            <h4 class="fw-semibold mb-0">
-                                {{ $courier->courierProfile?->vehicle_type ?? '-' }}
-                            </h4>
-
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <small class="text-muted d-block">
+                                    Vehicle Type
+                                </small>
+                                <h4 class="fw-semibold mb-0">
+                                    {{ $courier->courierProfile?->vehicle_type ?? '-' }}
+                                </h4>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block">
+                                    Vehicle Plate
+                                </small>
+                                <h4 class="fw-semibold mb-0">
+                                    {{ $courier->courierProfile?->vehicle_plate ?? '-' }}
+                                </h4>
+                            </div>
                         </div>
 
-                        <div>
+                        <hr class="my-3 text-muted" style="opacity: 0.15;">
 
-                            <small class="text-muted d-block">
-                                Vehicle Plate
-                            </small>
-
-                            <h4 class="fw-semibold mb-0">
-                                {{ $courier->courierProfile?->vehicle_plate ?? '-' }}
-                            </h4>
-
+                        <div class="row">
+                            <div class="col-6">
+                                <small class="text-muted d-block">
+                                    Nomor KTP
+                                </small>
+                                <h4 class="fw-semibold mb-0 text-dark">
+                                    {{ $courier->courierProfile?->ktp_number ?? '-' }}
+                                </h4>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block">
+                                    Nomor SIM
+                                </small>
+                                <h4 class="fw-semibold mb-0 text-dark">
+                                    {{ $courier->courierProfile?->sim_number ?? '-' }}
+                                </h4>
+                            </div>
                         </div>
 
                     </div>
@@ -290,17 +306,22 @@
 
                     <img
                         src="{{ asset('storage/' . $courier->courierProfile?->ktp_photo) }}"
-                        class="document-image"
+                        class="document-image mb-2"
                         alt="KTP"
                     >
 
                 @else
 
-                    <div class="document-empty">
+                    <div class="document-empty mb-2">
                         Belum ada foto KTP
                     </div>
 
                 @endif
+
+                <div class="mt-2 pt-2 border-top">
+                    <small class="text-muted d-block" style="font-size: 11px;">Nomor KTP (NIK)</small>
+                    <span class="fw-semibold text-dark">{{ $courier->courierProfile?->ktp_number ?? '-' }}</span>
+                </div>
 
             </div>
 
@@ -317,17 +338,22 @@
 
                     <img
                         src="{{ asset('storage/' . $courier->courierProfile?->sim_photo) }}"
-                        class="document-image"
+                        class="document-image mb-2"
                         alt="SIM"
                     >
 
                 @else
 
-                    <div class="document-empty">
+                    <div class="document-empty mb-2">
                         Belum ada foto SIM
                     </div>
 
                 @endif
+
+                <div class="mt-2 pt-2 border-top">
+                    <small class="text-muted d-block" style="font-size: 11px;">Nomor SIM</small>
+                    <span class="fw-semibold text-dark">{{ $courier->courierProfile?->sim_number ?? '-' }}</span>
+                </div>
 
             </div>
 
@@ -404,7 +430,6 @@
                     @empty
                         <div class="col-12">
                             <div class="text-center py-5 text-muted">
-                                <span style="font-size: 40px;" class="d-block mb-2">💬</span>
                                 Courier belum memiliki ulasan dari pelanggan.
                             </div>
                         </div>
