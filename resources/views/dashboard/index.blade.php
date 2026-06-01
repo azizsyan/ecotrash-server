@@ -369,12 +369,12 @@
         );
     </script>
 
-    {{-- Existing content --}}
-    <div class="row g-4">
+    {{-- Row 1: Recent Orders & Recent Withdrawals --}}
+    <div class="row g-4 mb-4">
 
         {{-- Pesanan --}}
-        <div class="col-lg-4">
-            <div class="content-card">
+        <div class="col-lg-6">
+            <div class="content-card h-100">
 
                 <h5 class="section-title mb-3">
                     Pesanan Terbaru
@@ -414,8 +414,8 @@
         </div>
 
         {{-- Withdrawal --}}
-        <div class="col-lg-4">
-            <div class="content-card">
+        <div class="col-lg-6">
+            <div class="content-card h-100">
 
                 <h5 class="section-title mb-3">
                     Penarikan Dana
@@ -454,12 +454,17 @@
             </div>
         </div>
 
+    </div>
+
+    {{-- Row 2: Top Couriers & Top Sellers --}}
+    <div class="row g-4">
+
         {{-- Courier --}}
-        <div class="col-lg-4">
-            <div class="content-card">
+        <div class="col-lg-6">
+            <div class="content-card h-100">
 
                 <h5 class="section-title mb-3">
-                    Kurir Terbaik
+                    Kurir Terbaik (Top Couriers)
                 </h5>
 
                 @forelse($topCouriers as $courier)
@@ -469,17 +474,58 @@
                         <div>
 
                             <div class="activity-title">
-                                {{ $courier->user->name }}
+                                {{ $courier->user->name ?? 'Kurir Demo' }}
                             </div>
 
                             <div class="activity-subtitle">
-                                Rating {{ number_format($courier->rating, 1) }}
+                                Rating ⭐ {{ number_format($courier->rating, 1) }}
                             </div>
 
                         </div>
 
-                        <div class="performance-score">
+                        <div class="performance-score text-success font-semibold">
                             {{ number_format($courier->totalWasteCollected(), 2) }} kg
+                        </div>
+
+                    </div>
+
+                @empty
+
+                    <div class="empty-state">
+                        Tidak ada data
+                    </div>
+
+                @endforelse
+
+            </div>
+        </div>
+
+        {{-- Top Sellers --}}
+        <div class="col-lg-6">
+            <div class="content-card h-100">
+
+                <h5 class="section-title mb-3">
+                    Kontributor Terbaik (Top Sellers)
+                </h5>
+
+                @forelse($topSellers as $seller)
+
+                    <div class="activity-item">
+
+                        <div>
+
+                            <div class="activity-title">
+                                {{ $seller->name }}
+                            </div>
+
+                            <div class="activity-subtitle">
+                                {{ $seller->email }}
+                            </div>
+
+                        </div>
+
+                        <div class="performance-score text-success font-semibold">
+                            {{ $seller->completed_orders_count }} Pesanan
                         </div>
 
                     </div>

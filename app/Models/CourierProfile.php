@@ -43,7 +43,6 @@ class CourierProfile extends Model
         */
 
         'rating',
-        'performance_score',
         'is_verified',
 
         /*
@@ -60,7 +59,6 @@ class CourierProfile extends Model
         'is_verified' => 'boolean',
 
         'rating' => 'float',
-        'performance_score' => 'float',
 
         'current_latitude' => 'decimal:7',
         'current_longitude' => 'decimal:7',

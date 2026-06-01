@@ -37,15 +37,21 @@
                 OPERASIONAL
             </p>
 
-            <a href="{{ route('orders') }}" class="sidebar-link">
+            <a href="{{ route('orders') }}" class="sidebar-link {{ request()->routeIs('orders*') ? 'active' : '' }}">
 
                 Orders
 
             </a>
 
-            <a href="{{ route('couriers.index') }}" class="sidebar-link">
+            <a href="{{ route('couriers.index') }}" class="sidebar-link {{ request()->routeIs('couriers*') ? 'active' : '' }}">
 
                 Couriers
+
+            </a>
+
+            <a href="{{ route('waste-categories.index') }}" class="sidebar-link {{ request()->routeIs('waste-categories*') ? 'active' : '' }}">
+
+                Kategori Sampah
 
             </a>
 
@@ -57,7 +63,7 @@
                 FINANCE
             </p>
 
-            <a href="{{ route('withdrawals') }}" class="sidebar-link">
+            <a href="{{ route('withdrawals') }}" class="sidebar-link {{ request()->routeIs('withdrawals*') ? 'active' : '' }}">
 
                 Withdrawals
 
@@ -73,7 +79,7 @@
                     SYSTEM
                 </p>
 
-                <a href="{{ route('admin-management.index') }}" class="sidebar-link">
+                <a href="{{ route('admin-management.index') }}" class="sidebar-link {{ request()->routeIs('admin-management*') ? 'active' : '' }}">
 
                     Admin Management
 

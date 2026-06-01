@@ -62,6 +62,21 @@ class AdminCourierController
                 'vehicle_plate' =>
                     'required|string|max:50',
 
+                'ktp_number' =>
+                    'required|string|max:50',
+
+                'sim_number' =>
+                    'required|string|max:50',
+
+                'ktp_photo' =>
+                    'required|image|mimes:jpg,jpeg,png|max:2048',
+
+                'sim_photo' =>
+                    'required|image|mimes:jpg,jpeg,png|max:2048',
+
+                'face_photo' =>
+                    'required|image|mimes:jpg,jpeg,png|max:2048',
+
                 'address' =>
                     'required|string|max:255',
 
@@ -71,6 +86,19 @@ class AdminCourierController
                 'province' =>
                     'required|string|max:100',
             ]);
+
+        /*UPLOAD PHOTOS*/
+        $ktpPhotoPath = $request
+            ->file('ktp_photo')
+            ->store('couriers/ktp', 'public');
+
+        $simPhotoPath = $request
+            ->file('sim_photo')
+            ->store('couriers/sim', 'public');
+
+        $facePhotoPath = $request
+            ->file('face_photo')
+            ->store('couriers/selfie', 'public');
 
         /*CREATE USER*/
         $courier =
@@ -123,6 +151,25 @@ class AdminCourierController
                 $validated[
                     'vehicle_plate'
                 ],
+
+            'ktp_number' =>
+                $validated[
+                    'ktp_number'
+                ],
+
+            'ktp_photo' =>
+                $ktpPhotoPath,
+
+            'sim_number' =>
+                $validated[
+                    'sim_number'
+                ],
+
+            'sim_photo' =>
+                $simPhotoPath,
+
+            'face_photo' =>
+                $facePhotoPath,
 
             'address' =>
                 $validated[

@@ -41,9 +41,9 @@ Route::post(
 );
 
 Route::get(
-    '/storage-proxy/{folder}/{filename}',
-    function ($folder, $filename) {
-        $path = storage_path('app/public/' . $folder . '/' . $filename);
+    '/storage-proxy/{path}',
+    function ($path) {
+        $path = storage_path('app/public/' . $path);
         if (!file_exists($path)) {
             abort(404);
         }
@@ -51,7 +51,7 @@ Route::get(
         $type = mime_content_type($path);
         return response($file, 200)->header('Content-Type', $type);
     }
-);
+)->where('path', '.*');
 
 /*
 |--------------------------------------------------------------------------
@@ -394,21 +394,7 @@ Route::middleware([
             [AdminOrderController::class, 'index']
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | WITHDRAWALS
-        |--------------------------------------------------------------------------
-        */
 
-        Route::patch(
-            '/admin/withdrawals/{id}/approve',
-            [WithdrawalController::class, 'approve']
-        );
-
-        Route::patch(
-            '/admin/withdrawals/{id}/reject',
-            [WithdrawalController::class, 'reject']
-        );
 
 
         /*

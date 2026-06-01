@@ -1378,3 +1378,27 @@ table {
     }
 }
 
+/* ==========================================================
+   17. NOTIFICATIONS DROPDOWN
+   ========================================================== */
+.notification-item {
+    transition: background-color 0.2s ease;
+}
+.notification-item:hover {
+    background-color: #f8fafc !important;
+}
+.notification-item.read-notif {
+    background-color: #ffffff !important;
+    opacity: 0.75;
+}
+.notification-item.unread-notif {
+    background-color: #f0fdf4 !important;
+}
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

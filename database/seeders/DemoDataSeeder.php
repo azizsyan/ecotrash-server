@@ -128,43 +128,31 @@ class DemoDataSeeder extends Seeder
             [
                 'vehicle_type' => 'Motor',
                 'vehicle_plate' => 'D7330ABC',
-                'rating' => 5.0,
-                'performance_score' => 20.0,
             ],
 
             [
                 'vehicle_type' => 'Motor',
                 'vehicle_plate' => 'D7302ABC',
-                'rating' => 0.0,
-                'performance_score' => 0.0,
             ],
 
             [
                 'vehicle_type' => 'Motor',
                 'vehicle_plate' => 'D5709ABC',
-                'rating' => 4.0,
-                'performance_score' => 10.0,
             ],
 
             [
                 'vehicle_type' => 'Motor',
                 'vehicle_plate' => 'D5453ABC',
-                'rating' => 0.0,
-                'performance_score' => 0.0,
             ],
 
             [
                 'vehicle_type' => 'Motorcycle',
                 'vehicle_plate' => 'D1234ABC',
-                'rating' => 0.0,
-                'performance_score' => 0.0,
             ],
 
             [
                 'vehicle_type' => 'Motor',
                 'vehicle_plate' => 'D9999BUB',
-                'rating' => 0.0,
-                'performance_score' => 0.0,
             ],
         ];
 
@@ -201,7 +189,6 @@ class DemoDataSeeder extends Seeder
                     'province' => 'Jawa Barat',
 
                     'rating' => 0.0,
-                    'performance_score' => 0.0,
 
                     'is_verified' => true,
 
@@ -247,13 +234,15 @@ class DemoDataSeeder extends Seeder
             'DELIVERED',
             'DELIVERED',
             'DELIVERED',
-            'DELIVERED',
 
             'COMPLETED',
             'COMPLETED',
             'COMPLETED',
             'COMPLETED',
+            'COMPLETED',
         ];
+
+        $completedCount = 0;
 
         foreach ($statuses as $index => $status) {
 
@@ -268,6 +257,15 @@ class DemoDataSeeder extends Seeder
 
             $courier =
                 $couriers[$index % $couriers->count()];
+
+            if ($status === 'COMPLETED') {
+                if ($completedCount < 3) {
+                    $courier = $couriers[0]; // Courier 1
+                } else {
+                    $courier = $couriers[2]; // Courier 3
+                }
+                $completedCount++;
+            }
 
             $estimatedWeight =
                 rand(5, 30);

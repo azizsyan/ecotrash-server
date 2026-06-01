@@ -219,7 +219,7 @@ class AdminDashboardController extends Controller
                     function ($courier) {
 
                         return
-                            ($courier->performance_score * 100)
+                            ($courier->totalWasteCollected() * 100)
                             + $courier->rating;
                     }
                 )

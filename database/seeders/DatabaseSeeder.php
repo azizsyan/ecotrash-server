@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DemoDataSeeder::class,
             ReviewSeeder::class,
+            NotificationSeeder::class,
         ]);
     }
 }

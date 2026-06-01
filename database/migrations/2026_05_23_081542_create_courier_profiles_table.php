@@ -45,12 +45,6 @@ return new class extends Migration {
                 2
             )->default(0);
 
-            $table->decimal(
-                'performance_score',
-                8,
-                2
-            )->default(0);
-
             $table->boolean(
                 'is_verified'
             )->default(false);

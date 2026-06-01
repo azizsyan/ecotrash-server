@@ -46,7 +46,7 @@
         {{-- Statistik --}}
         <div class="row g-4 mb-5">
 
-            <div class="col-12 col-sm-6 col-xxl-3">
+            <div class="col-12 col-md-4">
 
                 <div class="stat-card">
 
@@ -66,27 +66,7 @@
 
             </div>
 
-            <div class="col-12 col-sm-6 col-xxl-3">
-
-                <div class="stat-card">
-
-                    <p class="stat-label">
-                        Menunggu
-                    </p>
-
-                    <h2 class="stat-number" style="color:#EAB308;">
-                        {{ $pendingWithdrawals }}
-                    </h2>
-
-                    <p class="stat-subtitle">
-                        Menunggu verifikasi
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-12 col-sm-6 col-xxl-3">
+            <div class="col-12 col-md-4">
 
                 <div class="stat-card">
 
@@ -106,7 +86,7 @@
 
             </div>
 
-            <div class="col-12 col-sm-6 col-xxl-3">
+            <div class="col-12 col-md-4">
 
                 <div class="stat-card">
 
@@ -194,7 +174,6 @@
                             <th>Nominal</th>
                             <th>Status</th>
                             <th>Tanggal</th>
-                            <th class="text-center">Aksi</th>
 
                         </tr>
 
@@ -281,56 +260,13 @@
 
                                 </td>
 
-                                {{-- Action --}}
-                                <td class="text-center">
-
-                                    @if ($withdrawal->status === 'PENDING')
-
-                                        <div class="action-buttons">
-
-                                            <form action="{{ route('withdrawals.approve', $withdrawal->id) }}" method="POST">
-
-                                                @csrf
-
-                                                <button type="submit" class="btn-approve-custom">
-
-                                                    Setujui
-
-                                                </button>
-
-                                            </form>
-
-                                            <form action="{{ route('withdrawals.reject', $withdrawal->id) }}" method="POST">
-
-                                                @csrf
-
-                                                <button type="submit" class="btn-reject-custom">
-
-                                                    Tolak
-
-                                                </button>
-
-                                            </form>
-
-                                        </div>
-
-                                    @else
-
-                                        <span class="text-muted">
-                                            Sudah diproses
-                                        </span>
-
-                                    @endif
-
-                                </td>
-
                             </tr>
 
                         @empty
 
                             <tr>
 
-                                <td colspan="7" class="text-center py-5 text-muted">
+                                <td colspan="6" class="text-center py-5 text-muted">
                                     Belum ada data penarikan
                                 </td>
 

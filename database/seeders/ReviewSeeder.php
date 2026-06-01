@@ -49,7 +49,7 @@ class ReviewSeeder extends Seeder
                 'seller_id' => $order->seller->id,
                 'courier_id' => $order->courier->id,
                 'order_id' => $order->id,
-                'rating' => $this->getReviewRating(),
+                'rating' => $this->getReviewRating($order->courier),
                 'comment' => $this->getRandomComment(),
             ]);
 
@@ -63,10 +63,16 @@ class ReviewSeeder extends Seeder
     }
 
     /**
-     * Get a realistic review rating for demo data.
+     * Get a realistic review rating for demo data based on courier.
      */
-    private function getReviewRating(): int
+    private function getReviewRating($courier): int
     {
+        if (str_contains($courier->email, 'courier1')) {
+            return 5;
+        }
+        if (str_contains($courier->email, 'courier3')) {
+            return 4;
+        }
         return rand(4, 5);
     }
 
@@ -107,16 +113,8 @@ class ReviewSeeder extends Seeder
             $courierId
         )->avg('rating');
 
-        $completedOrders = Order::where(
-            'courier_id',
-            $courierId
-        )
-            ->where('status', 'COMPLETED')
-            ->count();
-
         $courier->courierProfile->update([
             'rating' => round($avgRating, 2),
-            'performance_score' => $completedOrders * 10,
         ]);
     }
 }

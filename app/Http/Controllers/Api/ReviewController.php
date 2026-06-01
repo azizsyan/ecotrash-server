@@ -136,17 +136,6 @@ class ReviewController extends Controller
                         'rating'
                     );
 
-            $completedOrders =
-                Order::where(
-                    'courier_id',
-                    $order->courier_id
-                )
-                    ->where(
-                        'status',
-                        'COMPLETED'
-                    )
-                    ->count();
-
             $courierProfile
                 ->update([
 
@@ -155,9 +144,6 @@ class ReviewController extends Controller
                             $avgRating,
                             2
                         ),
-
-                    'performance_score' =>
-                        $completedOrders * 10
                 ]);
         }
 

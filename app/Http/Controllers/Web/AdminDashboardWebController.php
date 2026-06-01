@@ -294,6 +294,17 @@ class AdminDashboardWebController extends Controller
                 ->take(5)
                 ->get();
 
+        /* Top Sellers */
+        $topSellers = User::whereHas('role', function ($query) {
+                $query->where('slug', 'seller');
+            })
+            ->withCount(['sellerOrders as completed_orders_count' => function ($query) {
+                $query->where('status', 'COMPLETED');
+            }])
+            ->orderByDesc('completed_orders_count')
+            ->take(5)
+            ->get();
+
         return view(
             'dashboard.index',
             [
@@ -325,6 +336,9 @@ class AdminDashboardWebController extends Controller
 
                 'topCouriers' =>
                     $topCouriers,
+
+                'topSellers' =>
+                    $topSellers,
 
                 'orderSummary' =>
                     $orderSummary,

@@ -24,27 +24,6 @@ class WithdrawalController extends Controller
 
         $wallet = $user->wallet;
 
-        //CHECK PENDING WITHDRAWAL
-
-        $hasPendingWithdrawal =
-            Withdrawal::where(
-                'user_id',
-                $user->id
-            )
-                ->where(
-                    'status',
-                    'PENDING'
-                )
-                ->exists();
-
-        if ($hasPendingWithdrawal) {
-
-            return response()->json([
-                'message' =>
-                    'Anda masih memiliki withdrawal pending'
-            ], 422);
-        }
-
         if (!$wallet) {
             return response()->json([
                 'message' => 'Wallet not found'
@@ -75,7 +54,8 @@ class WithdrawalController extends Controller
                 'amount' =>
                     $validated['amount'],
 
-                'status' => 'PENDING',
+                'status' => 'APPROVED',
+                'processed_at' => now(),
             ]);
 
             $wallet->decrement(
@@ -85,21 +65,21 @@ class WithdrawalController extends Controller
 
             WalletTransaction::create([
                 'wallet_id' => $wallet->id,
-                'type' => 'DEBIT',
+                'type' => 'WITHDRAW',
                 'amount' =>
                     $validated['amount'],
 
                 'description' =>
-                    'Withdrawal request',
+                    'Withdrawal request approved',
 
-                'status' => 'PENDING',
+                'status' => 'SUCCESS',
             ]);
 
             DB::commit();
 
             return response()->json([
                 'message' =>
-                    'Withdrawal request created',
+                    'Withdrawal request processed instantly',
 
                 'data' => $withdrawal
             ], 201);
@@ -110,7 +90,7 @@ class WithdrawalController extends Controller
 
             return response()->json([
                 'message' =>
-                    'Failed to create withdrawal',
+                    'Failed to process withdrawal',
 
                 'error' =>
                     $e->getMessage()
@@ -127,173 +107,6 @@ class WithdrawalController extends Controller
                 ->latest()
                 ->get()
         ]);
-    }
-
-    public function approve(string $id)
-    {
-        DB::beginTransaction();
-
-        try {
-
-            $withdrawal = Withdrawal::with(
-                'user.wallet'
-            )->findOrFail($id);
-
-            if (
-                $withdrawal->status
-                !== 'PENDING'
-            ) {
-
-                return response()->json([
-                    'message' =>
-                        'Withdrawal already processed'
-                ], 422);
-            }
-
-            $withdrawal->update([
-                'status' =>
-                    'APPROVED',
-
-                'processed_at' =>
-                    now(),
-            ]);
-
-            WalletTransaction::create([
-                'wallet_id' =>
-                    $withdrawal
-                        ->user
-                        ->wallet
-                        ->id,
-
-                'type' =>
-                    'WITHDRAW',
-
-                'amount' =>
-                    $withdrawal
-                        ->amount,
-
-                'description' =>
-                    'Withdrawal approved',
-
-                'status' =>
-                    'SUCCESS',
-            ]);
-
-            DB::commit();
-
-            return response()->json([
-                'message' =>
-                    'Withdrawal approved successfully',
-
-                'data' =>
-                    $withdrawal
-            ]);
-
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            return response()->json([
-                'message' =>
-                    'Failed to approve withdrawal',
-
-                'error' =>
-                    $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function reject(
-        Request $request,
-        string $id
-    ) {
-        $validated = $request->validate([
-            'admin_notes' =>
-                'nullable|string|max:255'
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-
-            $withdrawal = Withdrawal::with(
-                'user.wallet'
-            )->findOrFail($id);
-
-            if (
-                $withdrawal->status
-                !== 'PENDING'
-            ) {
-
-                return response()->json([
-                    'message' =>
-                        'Withdrawal already processed'
-                ], 422);
-            }
-
-            $wallet =
-                $withdrawal
-                    ->user
-                    ->wallet;
-
-            // REFUND BALANCE
-            $wallet->increment(
-                'balance',
-                $withdrawal->amount
-            );
-
-            $withdrawal->update([
-                'status' =>
-                    'REJECTED',
-
-                'admin_notes' =>
-                    $validated[
-                        'admin_notes'
-                    ] ?? null,
-
-                'processed_at' =>
-                    now(),
-            ]);
-
-            WalletTransaction::create([
-                'wallet_id' =>
-                    $wallet->id,
-
-                'type' =>
-                    'REFUND',
-
-                'amount' =>
-                    $withdrawal->amount,
-
-                'description' =>
-                    'Withdrawal rejected refund',
-
-                'status' =>
-                    'SUCCESS',
-            ]);
-
-            DB::commit();
-
-            return response()->json([
-                'message' =>
-                    'Withdrawal rejected successfully',
-
-                'data' =>
-                    $withdrawal
-            ]);
-
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            return response()->json([
-                'message' =>
-                    'Failed to reject withdrawal',
-
-                'error' =>
-                    $e->getMessage()
-            ], 500);
-        }
     }
 
 }

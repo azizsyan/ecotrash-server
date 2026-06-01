@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\CourierWebController;
 use App\Http\Controllers\Web\OrderWebController;
 use App\Http\Controllers\Web\WithdrawalWebController;
 use App\Http\Controllers\Web\AdminManagementWebController;
+use App\Http\Controllers\Web\WasteCategoryWebController;
 
 
 /*
@@ -102,6 +103,22 @@ Route::middleware('auth')
                     ]
                 )->name('show');
 
+                Route::get(
+                    '/{id}/edit',
+                    [
+                        CourierWebController::class,
+                        'edit'
+                    ]
+                )->name('edit');
+
+                Route::post(
+                    '/{id}/update',
+                    [
+                        CourierWebController::class,
+                        'update'
+                    ]
+                )->name('update');
+
                 Route::post(
                     '/{id}/toggle-status',
                     [
@@ -153,21 +170,63 @@ Route::middleware('auth')
             ]
         )->name('withdrawals');
 
-        Route::post(
-            '/withdrawals/{id}/approve',
-            [
-                WithdrawalWebController::class,
-                'approve'
-            ]
-        )->name('withdrawals.approve');
+        /*
+        |--------------------------------------------------------------------------
+        | Waste Categories
+        |--------------------------------------------------------------------------
+        */
+        Route::prefix('waste-categories')
+            ->name('waste-categories.')
+            ->group(function () {
 
-        Route::post(
-            '/withdrawals/{id}/reject',
-            [
-                WithdrawalWebController::class,
-                'reject'
-            ]
-        )->name('withdrawals.reject');
+                Route::get(
+                    '/',
+                    [
+                        WasteCategoryWebController::class,
+                        'index'
+                    ]
+                )->name('index');
+
+                Route::get(
+                    '/create',
+                    [
+                        WasteCategoryWebController::class,
+                        'create'
+                    ]
+                )->name('create');
+
+                Route::post(
+                    '/store',
+                    [
+                        WasteCategoryWebController::class,
+                        'store'
+                    ]
+                )->name('store');
+
+                Route::get(
+                    '/{id}/edit',
+                    [
+                        WasteCategoryWebController::class,
+                        'edit'
+                    ]
+                )->name('edit');
+
+                Route::post(
+                    '/{id}/update',
+                    [
+                        WasteCategoryWebController::class,
+                        'update'
+                    ]
+                )->name('update');
+
+                Route::post(
+                    '/{id}/delete',
+                    [
+                        WasteCategoryWebController::class,
+                        'destroy'
+                    ]
+                )->name('destroy');
+            });
 
         /*
         |--------------------------------------------------------------------------
@@ -238,6 +297,7 @@ Route::middleware('auth')
         |--------------------------------------------------------------------------
         | Logout
         |--------------------------------------------------------------------------
+        |
         */
         Route::post(
             '/logout',
@@ -246,4 +306,5 @@ Route::middleware('auth')
                 'logout'
             ]
         );
+
     });

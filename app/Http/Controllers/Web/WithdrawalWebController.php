@@ -88,31 +88,4 @@ class WithdrawalWebController extends Controller
         );
     }
 
-    public function approve($id)
-    {
-        $withdrawal = Withdrawal::findOrFail($id);
-
-        $withdrawal->update([
-            'status' => 'APPROVED'
-        ]);
-
-        return back()->with(
-            'success',
-            'Withdrawal berhasil disetujui.'
-        );
-    }
-
-    public function reject($id)
-    {
-        $withdrawal = Withdrawal::findOrFail($id);
-
-        $withdrawal->update([
-            'status' => 'REJECTED'
-        ]);
-
-        return back()->with(
-            'success',
-            'Withdrawal berhasil ditolak.'
-        );
-    }
 }

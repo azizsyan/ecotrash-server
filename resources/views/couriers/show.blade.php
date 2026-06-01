@@ -65,6 +65,10 @@
                         <br><br>
 
                         {{-- Action Button --}}
+                        <a href="{{ route('couriers.edit', $courier->id) }}" class="btn btn-outline-primary rounded-pill px-4 me-2" style="color: var(--eco-primary); border-color: var(--eco-primary);">
+                            Edit Profil
+                        </a>
+
                         <form action="{{ route('couriers.toggle-status', $courier->id) }}" method="POST" class="d-inline">
                             @csrf
 
@@ -359,6 +363,55 @@
     </div>
 
 </div> 
+
+        {{-- Reviews --}}
+        <div class="card border-0 shadow-sm rounded-4 mt-4">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-2">
+                    Riwayat Ulasan Pelanggan
+                </h3>
+                <p class="text-muted mb-4">
+                    Ulasan dan penilaian dari seller setelah proses penjemputan sampah selesai
+                </p>
+
+                <div class="row g-3">
+                    @forelse($courier->reviewsReceived as $review)
+                        <div class="col-md-6">
+                            <div class="card border-1 border-light rounded-4 p-3 h-100" style="background: #fafafb;">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="fw-bold mb-1" style="color: var(--eco-text);">
+                                            {{ $review->seller->name ?? 'Seller Demo' }}
+                                        </h6>
+                                        <small class="text-muted" style="font-size: 11px;">
+                                            Order: <span class="fw-semibold">{{ $review->order->order_code ?? '-' }}</span>
+                                        </small>
+                                    </div>
+                                    <span class="badge bg-warning text-dark fs-7 px-2.5 py-1.5 rounded-pill">
+                                        ⭐ {{ number_format($review->rating, 1) }}
+                                    </span>
+                                </div>
+                                <p class="text-secondary mb-2" style="font-size: 13.5px; line-height: 1.5; font-style: italic;">
+                                    "{{ $review->comment ?? 'Tidak ada komentar.' }}"
+                                </p>
+                                <div class="text-end mt-auto">
+                                    <small class="text-muted" style="font-size: 11px;">
+                                        {{ $review->created_at->format('d M Y, H:i') }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="col-12">
+                            <div class="text-center py-5 text-muted">
+                                <span style="font-size: 40px;" class="d-block mb-2">💬</span>
+                                Courier belum memiliki ulasan dari pelanggan.
+                            </div>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
 
         </div>
 
